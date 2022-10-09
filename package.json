@@ -1,0 +1,38 @@
+{
+    "name": "vue-lottie",
+    "author": "__d",
+    "license": "MIT",
+    "keywords": [
+        "vue",
+        "vuejs",
+        "component",
+        "lottie"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/glamseam/vue-lottie.git"
+    },
+    "private": true,
+    "workspaces": [
+        "demo",
+        "src"
+    ],
+    "scripts": {
+        "demo:build": "pnpm -F vue-lottie-demo build",
+        "demo:dev": "pnpm -F vue-lottie-demo dev",
+        "demo:lint": "pnpm -F vue-lottie-demo lint",
+        "demo:lint:fix": "pnpm -F vue-lottie-demo lint:fix",
+        "build": "pnpm -F @d-gs/vue-lottie build",
+        "dev": "pnpm -F @d-gs/vue-lottie dev",
+        "pub": "pnpm -F @d-gs/vue-lottie pub",
+        "lint": "pnpm -F @d-gs/vue-lottie lint",
+        "lint:fix": "pnpm -F @d-gs/vue-lottie lint:fix",
+        "serve": "pnpm -F @d-gs/vue-lottie serve",
+        "stg": "pnpm -F @d-gs/vue-lottie stg",
+        "vtsc": "pnpm -F @d-gs/vue-lottie vtsc"
+    },
+    "devDependencies": {
+        "@d-gs/eslint-config": "^0.1.12",
+        "eslint": "^8.25.0"
+    }
+}
