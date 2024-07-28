@@ -1,4 +1,6 @@
 {
+    "private": true,
+    "type": "module",
     "name": "vue-lottie",
     "author": "__d",
     "license": "MIT",
@@ -12,7 +14,6 @@
         "type": "git",
         "url": "git+https://github.com/glamseam/vue-lottie.git"
     },
-    "private": true,
     "workspaces": [
         "demo",
         "src"
@@ -32,7 +33,16 @@
         "vtsc": "pnpm -F @d-gs/vue-lottie vtsc"
     },
     "devDependencies": {
-        "@d-gs/eslint-config": "^0.1.12",
-        "eslint": "^8.25.0"
+        "@d-gs/eslint-config": "^0.3.0",
+        "@d-gs/eslint-config-for-vue": "^0.6.0",
+        "@d-gs/prettier-config": "^0.3.0",
+        "@vitejs/plugin-vue": "^5.1.0",
+        "eslint": "^8.57.0",
+        "eslint-config-prettier": "^9.1.0",
+        "prettier": "^3.3.3",
+        "typescript": "^5.4.5",
+        "vite": "^5.3.5",
+        "vue": "^3.2.40",
+        "vue-tsc": "^2.0.19"
     }
 }
