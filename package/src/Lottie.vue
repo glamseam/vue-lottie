@@ -1,29 +1,37 @@
 <template>
-    <div ref="containerEl" />
+    <div ref="lottieEl" />
 </template>
 
 <script lang="ts" setup>
-import {
-    onMounted,
-    onBeforeUnmount,
-    ref
-} from 'vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
+
 import lottie, {
-    type AnimationItem,
     type AnimationConfigWithData,
-    type RendererType
+    type AnimationItem,
+    type CanvasRendererConfig,
+    type HTMLRendererConfig,
+    type RendererType,
+    type SVGRendererConfig
 } from 'lottie-web'
 
-const props = withDefaults(defineProps<{
-    animationData: AnimationConfigWithData<RendererType>['animationData']
-    description?: string
-    isAutoPlay?: boolean
-    isLoop?: boolean
-    title?: string
-}>(), {
-    isAutoPlay: true,
-    isLoop: false
-})
+const props = withDefaults(
+    defineProps<{
+        animationData: AnimationConfigWithData<RendererType>['animationData']
+        rendererType: RendererType
+        canvasConfig?: CanvasRendererConfig
+        htmlConfig?: HTMLRendererConfig
+        svgConfig?: SVGRendererConfig
+        autoload?: boolean
+        autoplay?: boolean
+        loop?: boolean
+    }>(),
+    {
+        rendererType: 'canvas',
+        autoload: false,
+        autoplay: false,
+        loop: false
+    }
+)
 
 const emit = defineEmits<{
     (e: 'complete'): void
@@ -33,42 +41,88 @@ const emit = defineEmits<{
     // (e: 'stopped'): void
 }>()
 
-const containerEl = ref<HTMLDivElement>()
+const lottieEl = ref<HTMLDivElement>()
 const animationItem = ref<AnimationItem>()
 
-onMounted(() => {
-    loadAnimation()
-})
+function getRendererSettings() {
+    switch (props.rendererType) {
+        case 'canvas':
+            return props.canvasConfig
+        case 'html':
+            return props.htmlConfig
+        case 'svg':
+            return props.svgConfig
+    }
+}
 
-const loadAnimation = () => {
-    if (containerEl.value) {
+function load() {
+    if (lottieEl.value) {
         animationItem.value = lottie.loadAnimation({
-            container: containerEl.value,
-            loop: props.isLoop,
-            autoplay: props.isAutoPlay,
+            container: lottieEl.value,
+            renderer: props.rendererType,
             animationData: props.animationData,
-            rendererSettings: {
-                title: props.title,
-                description: props.description
-            }
+            autoplay: props.autoplay,
+            loop: props.loop,
+            rendererSettings: getRendererSettings()
         })
 
-        if (!props.isLoop) {
-            animationItem.value.addEventListener(('complete'), () => {
+        if (!props.loop) {
+            animationItem.value.addEventListener('complete', () => {
                 emit('complete')
             })
         }
 
-        if (props.isLoop) {
-            animationItem.value.addEventListener(('loopComplete'), () => {
+        if (props.loop) {
+            animationItem.value.addEventListener('loopComplete', () => {
                 emit('loop-complete')
             })
         }
     }
 }
 
+function play() {
+    animationItem.value?.play()
+}
+
+function stop() {
+    animationItem.value?.stop()
+}
+
+function pause() {
+    animationItem.value?.pause()
+}
+
+function destroy() {
+    animationItem.value?.destroy()
+}
+
+onMounted(() => {
+    if (props.autoload) {
+        load()
+    }
+})
+
 onBeforeUnmount(() => {
     animationItem.value?.removeEventListener('complete')
     animationItem.value?.removeEventListener('loopComplete')
+    animationItem.value?.destroy()
 })
+
+defineExpose<LottieExpose>({
+    load,
+    play,
+    stop,
+    pause,
+    destroy
+})
+</script>
+
+<script lang="ts">
+export interface LottieExpose {
+    load(): void
+    play(): void
+    stop(): void
+    pause(): void
+    destroy(): void
+}
 </script>
