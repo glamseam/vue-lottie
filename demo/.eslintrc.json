@@ -1,16 +1,11 @@
 {
     "extends": [
         "@d-gs/eslint-config",
-        "@d-gs/eslint-config-for-vue"
+        "@d-gs/eslint-config-for-vue",
+        "prettier"
     ],
-    "parser": "vue-eslint-parser",
-    "parserOptions": {
-        "parser": "@typescript-eslint/parser",
-        "sourceType": "module",
-        "project": "./tsconfig.json",
-        "extraFileExtensions": [".vue"],
-        "ecmaFeatures": {
-            "jsx": true
-        }
+    "rules": {
+        "func-style": ["error", "declaration"],
+        "@typescript-eslint/ban-ts-comment": "warn"
     }
 }

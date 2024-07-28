@@ -1,4 +1,5 @@
 {
+    "type": "module",
     "name": "vue-lottie-demo",
     "scripts": {
         "dev": "vite",
@@ -10,12 +11,6 @@
         "lint:fix": "eslint --fix src -c .eslintrc.json --ext ts,vue"
     },
     "devDependencies": {
-        "@d-gs/eslint-config-for-vue": "^0.4.0",
-        "@d-gs/vue-lottie": "workspace:*",
-        "@vitejs/plugin-vue": "^3.1.2",
-        "rollup-plugin-terser": "^7.0.2",
-        "vite": "^3.1.6",
-        "vue": "^3.2.40",
-        "vue-tsc": "^1.0.1"
+        "@d-gs/vue-lottie": "workspace:*"
     }
 }

@@ -1,29 +1,15 @@
-import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import { terser } from 'rollup-plugin-terser'
-import { join } from 'path'
+import { join } from 'node:path'
+import { defineConfig } from 'vite'
 
-export default defineConfig(({ mode }) => {
-    const isProduction = mode === 'production'
-
+export default defineConfig(() => {
     return {
         build: {
             target: 'modules',
             cssCodeSplit: true,
-            sourcemap: false,
-            rollupOptions: {
-                plugins: [
-                    terser({
-                        compress: {
-                            drop_console: isProduction
-                        }
-                    })
-                ]
-            }
+            sourcemap: false
         },
-        plugins: [
-            vue({ reactivityTransform: true })
-        ],
+        plugins: [vue()],
         resolve: {
             alias: {
                 '@': join(__dirname, 'src')
